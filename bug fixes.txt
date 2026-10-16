@@ -1,0 +1,2 @@
+WHen media folder is empty, cause recent undefined server 32
+Fix when user types nothing in search
