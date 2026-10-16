@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* General */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 1rem;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.media {
+  max-width: 75ch;
+  border: 2px solid black;
+  max-width: 300px;
+}
+
+/* Nav */
+nav {
+  font-size: clamp(1.875rem, 1.2vw + 0.5rem, 2.125rem);
+  input {
+    border-radius: 0 50px 50px 0;
+    border-style: none;
+    border: 1px solid black;
+}
+select {
+    border-radius: 50px  0 0 50px;
+    margin-right: -10px;
+}
+input, select {
+    font-size: 1.5rem;
+    
+}
+}
+nav li {
+  list-style: none;
+}
+.nav-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}

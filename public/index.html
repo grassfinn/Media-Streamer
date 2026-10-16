@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>media-streamer</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul class="nav-flex">
+        <li>
+          <a href="./index.html">
+            <img src="./image/logo.png" alt="Beaver" />
+          </a>
+        </li>
+        <li>
+          <form id="nav-form" action="">
+            <select name="content">
+              <option id="" disabled selected value="videos">Content</option>
+              <option id="" value="videos">Videos</option>
+              <option id="" value="podcasts">Podcasts</option>
+            </select>
+            <input type="text" placeholder="Search" name="search" autocomplete="off" />
+          </form>
+        </li>
+        <li>
+          <div>
+            <a href="#">📺</a>
+            <a href="#">📻</a>
+            <a href="#">🎶</a>
+            <a href="#">📚</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- Search Results -->
+    <section id="search-results">
+
+    </section>
+
+    <!-- Recent Videos -->
+    <section>
+      <h2>Recent Videos</h2>
+      <div>
+        <h3 class="recent-media"></h3>
+        <video controls width="400">
+          <source src="http://localhost:3500/api/media/recentvideo" type="video/mp4;">
+        </video>
+      </div>
+    </section>
+    <!-- Recent Podcasts -->
+    <section>
+      <h2>Recent Podcasts</h2>
+      <div>
+        <h3 class="recent-media"></h3>
+        <audio controls>
+          <source src="http://localhost:3500/api/media/recentpodcast" type="audio/mpeg" />
+        </audio>
+      </div>
+      <div>
+        <details>
+          <summary>Previous podcasts</summary>
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>
