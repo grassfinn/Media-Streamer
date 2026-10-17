@@ -15,7 +15,7 @@ app.use(cors());
 app.get("/", async (req, res) => {
   try {
     res.sendFile(path.join(publicPath, "index.html"));
-  } catch (error) {}
+  } catch (error) { }
 });
 app.get("/:filestats", async (req, res) => {
   return res.send(contents[req.params.filestats]);
@@ -56,7 +56,7 @@ app.get("/api/media/:content", async (req, res) => {
 });
 
 app.listen(3500, async () => {
-  console.log(`listening on http://192.168.1.45:3500`);
+  console.log(`listening on http://ENV`);
   await contents.init();
   console.log("Content has been loaded!");
 });
