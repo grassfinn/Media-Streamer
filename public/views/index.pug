@@ -1,0 +1,64 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    link(rel="icon", type="image/svg+xml", href="/favicon.svg")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title media-streamer
+    link(rel="stylesheet", href="./css/style.css")
+  
+  body
+    header
+      nav
+        ul.nav-flex
+          li
+            a(href="./index.html")
+              img(src="./image/logo.png", alt="Beaver")
+              span B.E.A.V.A.R.
+          li
+            form#nav-form(action="")
+              select(name="content")
+                option(disabled, selected, value="lectures") Content
+                option(value="videos") Videos
+                option(value="lectures") Lectures
+                option(value="podcasts") Podcasts
+              input(type="text", placeholder="Search", name="search", autocomplete="off")
+          li
+            div
+              a(href="#") 📺
+              a(href="#") 📻
+              a(href="#") 🎶
+              a(href="#") 📚
+
+    main
+      // Search Results
+      section#search-results
+
+      // Recent Videos
+      section
+        h2 Recent Videos
+        div
+          h3.recent-media Recent Video
+          video(controls, width="400")
+            source(src=locations.videoSrc, type="video/mp4;")
+        div 
+            h3.recent-media Recent Lecture
+            video(controls, width="400")
+                source(src=locations.lectureSrc, type="video/mp4")
+
+      // Recent Podcasts
+      section
+        h2 Recent Podcasts
+        div
+          h3.recent-media
+          audio(controls)
+            source(src=locations.podcastSrc, type="audio/mpeg")
+        div
+          details
+            summary Previous podcasts
+            ul
+              li 1
+              li 2
+              li 3
+
+    script(type="module", src="./js/app.js")

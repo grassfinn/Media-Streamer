@@ -20,7 +20,8 @@ export class FileStats {
       this.media[folder] = data;
     }
     this.recent = this.mostRecent();
-    await this.createThumbnails();
+    await this.createThumbnails("videos");
+    await this.createThumbnails("lectures");
     return this;
   }
 
@@ -76,47 +77,57 @@ export class FileStats {
     return found;
   }
   mostRecent() {
-    const { podcasts, videos } = this.media;
+    const { podcasts, videos, lectures } = this.media;
     const podcastTimes = podcasts.sort((a, b) => b.createdAt - a.createdAt);
     const videoTimes = videos.sort((a, b) => b.createdAt - a.createdAt);
+    const lectureTime = lectures.sort((a, b) => b.createdAt - a.createdAt);
 
-    return [podcastTimes[0], videoTimes.length ? videoTimes[0] : {}];
+    return [
+      podcastTimes[0],
+      videoTimes.length ? videoTimes[0] : {},
+      lectureTime.length ? lectureTime[0] : {},
+    ];
   }
 
   // Turn into own class?
 
-createThumbnail(videoPath) {
-  const outputDir = path.join(import.meta.dirname, '..', 'public', 'media', 'image');
-  
-  // 1. Isolate the filename without its video extension (.webm)
-  const baseNameWithoutExt = path.basename(videoPath, path.extname(videoPath));
-  
-  // 2. Strips out URL-breaking symbols but preserves spaces as requested
-  const cleanBaseName = baseNameWithoutExt
-    .replace(/[#?%]/g, "") 
-    .replace(/\s+/g, " "); // Kept as a clean space character
+  createThumbnail(videoPath) {
+    const outputDir = path.join(
+      import.meta.dirname,
+      "..",
+      "public",
+      "media",
+      "image",
+    );
 
-  const outputFile = path.join(outputDir, `${cleanBaseName}.png`);
+    // 1. Isolate the filename without its video extension (.webm)
+    const baseNameWithoutExt = path.basename(
+      videoPath,
+      path.extname(videoPath),
+    );
 
-  Ffmpeg(videoPath)
-    .seekInput('00:00:01') 
-    .outputOptions([
-      '-vframes 1',      
-      '-q:v 2',          
-      '-s 300x200'       
-    ])
-    .output(outputFile)
-    .on('end', () => {
-      console.log(`[SUCCESS] Generated thumbnail: ${cleanBaseName}.png`);
-    })
-    .on('error', (err) => {
-      console.error(`[FFMPEG ERROR] on "${cleanBaseName}":`, err.message);
-    })
-    .run();
-}
+    // 2. Strips out URL-breaking symbols but preserves spaces as requested
+    const cleanBaseName = baseNameWithoutExt
+      .replace(/[#?%]/g, "")
+      .replace(/\s+/g, " "); // Kept as a clean space character
 
-  async createThumbnails() {
-    const filenames = await this.listFiles("videos");
+    const outputFile = path.join(outputDir, `${cleanBaseName}.png`);
+
+    Ffmpeg(videoPath)
+      .seekInput("00:00:01")
+      .outputOptions(["-vframes 1", "-q:v 2", "-s 300x200"])
+      .output(outputFile)
+      .on("end", () => {
+        console.log(`[SUCCESS] Generated thumbnail: ${cleanBaseName}.png`);
+      })
+      .on("error", (err) => {
+        console.error(`[FFMPEG ERROR] on "${cleanBaseName}":`, err.message);
+      })
+      .run();
+  }
+
+  async createThumbnails(folder) {
+    const filenames = await this.listFiles(folder);
 
     for (const file of filenames) {
       const oldFilepath = path.join(file.dirPath, file.file);

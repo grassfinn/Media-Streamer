@@ -1,11 +1,12 @@
 {
   "type": "module",
   "scripts": {
-    "start": "node --watch ./src/server.js"
+    "start": "node --env-file=.env --watch ./src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "fluent-ffmpeg": "^2.1.3"
+    "fluent-ffmpeg": "^2.1.3",
+    "pug": "^3.0.4"
   }
 }

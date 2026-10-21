@@ -8,13 +8,24 @@ const app = express();
 const publicPath = path.join(import.meta.dirname, "..", "public");
 const mediaPath = path.join(publicPath, "media");
 const contents = new FileStats(mediaPath);
+const address = process.env.IP
+
 
 app.use(express.static(publicPath, { index: false }));
 app.use(cors());
 
+app.set("view engine", "pug");
+app.set("views", path.join(publicPath, "views"));
+
 app.get("/", async (req, res) => {
+  const locations = {
+    videoSrc: 'http://192.168.1.45:3500/api/media/recentvideo',
+  podcastSrc: 'http://192.168.1.45:3500/api/media/recentpodcast',
+  lectureSrc: 'http://192.168.1.45:3500/api/media/recentlecture'
+  }
   try {
-    res.sendFile(path.join(publicPath, "index.html"));
+    // res.sendFile(path.join(publicPath, "index.html"));
+    res.render("index",{locations});
   } catch (error) {}
 });
 app.get("/:filestats", async (req, res) => {
@@ -34,6 +45,15 @@ app.get("/api/media/recentvideo", async (req, res) => {
   console.log("Getting cast");
 
   const recent = contents.recent[1];
+  const { dirPath, file } = recent;
+  const filePath = path.join(dirPath, file);
+  const streamer = new MediaStreamer(filePath, "video/mp4");
+  await streamer.stream(req, res);
+});
+app.get("/api/media/recentlecture", async (req, res) => {
+  console.log("Getting lecture");
+
+  const recent = contents.recent[2];
   const { dirPath, file } = recent;
   const filePath = path.join(dirPath, file);
   const streamer = new MediaStreamer(filePath, "video/mp4");

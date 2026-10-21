@@ -1,5 +1,7 @@
 node_modules
-public/media/image
-public/media/videos
-public/media/podcasts
+public/media/image/*
+public/media/videos/*
+public/media/podcasts/*
+public/media/lectures/*
 notes.txt
+.env

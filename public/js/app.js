@@ -4,11 +4,12 @@ const removeExtension = /\.([^.]+)$/;
 const scrubbedTitles = recentData.map((title) =>
   title.file.replace(removeExtension, ""),
 );
-const [podcast, video] = scrubbedTitles;
+const [podcast, video, lecture] = scrubbedTitles;
 const titles = document.querySelectorAll(".recent-media");
-const [videoTitle, podcastTitle] = titles;
+const [videoTitle,lectureTitle, podcastTitle] = titles;
 videoTitle.textContent = video;
 podcastTitle.textContent = podcast;
+lectureTitle.textContent = lecture
 
 // Selectors
 const navForm = document.querySelector("#nav-form");
@@ -22,7 +23,7 @@ async function handleForm(e) {
   console.log(e);
   const formData = Object.fromEntries(new FormData(e.target));
   if (!formData.content) {
-    formData.content = "videos";
+    formData.content = "lectures";
   }
   const { content, search } = formData;
   const slug = search.length ? `${content}?search=${search}` : content;
