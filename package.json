@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "start": "node --env-file=.env --watch ./src/server.js"
+    "dev": "node --env-file=.env ./src/server.js",
+    "start": "node ./src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.6",

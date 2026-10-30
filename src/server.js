@@ -75,7 +75,7 @@ app.get("/api/media/:content", async (req, res) => {
   res.send(found);
 });
 
-app.listen(3500, async () => {
+app.listen(3500,"0.0.0.0", async () => {
   console.log(`listening on http://192.168.1.45:3500`);
   await contents.init();
   console.log("Content has been loaded!");

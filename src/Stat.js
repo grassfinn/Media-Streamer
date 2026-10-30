@@ -2,8 +2,18 @@ import fs from "fs/promises";
 import { renameSync } from "fs";
 import path from "path";
 import Ffmpeg from "fluent-ffmpeg";
-Ffmpeg.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
-Ffmpeg.setFfprobePath("C:/ffmpeg/bin/ffprobe.exe");
+
+// Set path conditionally based on the environment/platform
+if (process.platform === 'win32') {
+  // Local Windows development
+  Ffmpeg.setFfprobePath("C:/ffmpeg/bin/ffprobe.exe");
+  Ffmpeg.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
+} else {
+  // Linux / Docker container (FFmpeg is in the global system PATH)
+  Ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
+  Ffmpeg.setFfprobePath("/usr/bin/ffprobe");
+}
+
 
 export class FileStats {
   constructor(folder = "public/media") {
