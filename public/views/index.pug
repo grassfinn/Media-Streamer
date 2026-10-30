@@ -12,9 +12,9 @@ html(lang="en")
       nav
         ul.nav-flex
           li
-            a(href="./index.html")
-              img(src="./image/logo.png", alt="Beaver")
-              span B.E.A.V.A.R.
+            a(href="./index.html").logo
+              img(src="./image/logo.png", alt="Beaver").logo
+              span.logo B.E.A.V.A.R.
           li
             form#nav-form(action="")
               select(name="content")
@@ -30,24 +30,27 @@ html(lang="en")
               a(href="#") 🎶
               a(href="#") 📚
 
+    section#search-results
     main
       // Search Results
-      section#search-results
 
       // Recent Videos
-      section
-        h2 Recent Videos
-        div
-          h3.recent-media Recent Video
-          video(controls, width="400")
-            source(src=locations.videoSrc, type="video/mp4;")
-        div 
-            h3.recent-media Recent Lecture
-            video(controls, width="400")
-                source(src=locations.lectureSrc, type="video/mp4")
+      section.video-content
+        article.video 
+          h3 Recent Video 
+          div.flex
+            h4.recent-media 
+            video(controls, width="400").recent-vid
+              source(src=locations.videoSrc, type="video/mp4;")
+        article.lecture 
+            h3 Recent Lecture
+            div.flex 
+              h4.recent-media 
+              video(controls, width="400").recent-lecture
+                  source(src=locations.lectureSrc, type="video/mp4")
 
       // Recent Podcasts
-      section
+      section.audio-content
         h2 Recent Podcasts
         div
           h3.recent-media

@@ -8,8 +8,8 @@ const app = express();
 const publicPath = path.join(import.meta.dirname, "..", "public");
 const mediaPath = path.join(publicPath, "media");
 const contents = new FileStats(mediaPath);
-const address = process.env.IP
-
+const address = process.env.IP;
+const port = process.env.PORT;
 
 app.use(express.static(publicPath, { index: false }));
 app.use(cors());
@@ -19,13 +19,13 @@ app.set("views", path.join(publicPath, "views"));
 
 app.get("/", async (req, res) => {
   const locations = {
-    videoSrc: 'http://192.168.1.45:3500/api/media/recentvideo',
-  podcastSrc: 'http://192.168.1.45:3500/api/media/recentpodcast',
-  lectureSrc: 'http://192.168.1.45:3500/api/media/recentlecture'
-  }
+    videoSrc: `${address}/api/media/recentvideo`,
+    podcastSrc: `${address}/api/media/recentpodcast`,
+    lectureSrc: `${address}/api/media/recentlecture`,
+  };
   try {
     // res.sendFile(path.join(publicPath, "index.html"));
-    res.render("index",{locations});
+    res.render("index", { locations });
   } catch (error) {}
 });
 app.get("/:filestats", async (req, res) => {
@@ -65,18 +65,21 @@ app.get("/api/media/:content", async (req, res) => {
   const search = req.query.search;
 
   // find videos with search
-  console.log({ search });
+  console.log({ search, content }, "searching for...");
 
   const found = await Promise.all(
     contents.findFileInFolder(search.toLowerCase(), content),
   );
+console.log(found);
 
   // display them on page
-  res.send(found);
+  if (found) {
+    res.send(found);
+  }
 });
 
-app.listen(3500, async () => {
-  console.log(`listening on http://192.168.1.45:3500`);
+app.listen(port, async () => {
+  console.log(`listening on ${address}`);
   await contents.init();
   console.log("Content has been loaded!");
 });
