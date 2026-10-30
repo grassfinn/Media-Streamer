@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { renameSync } from "fs";
+import { renameSync, existsSync } from "fs";
 import path from "path";
 import Ffmpeg from "fluent-ffmpeg";
 
@@ -123,17 +123,21 @@ export class FileStats {
 
     const outputFile = path.join(outputDir, `${cleanBaseName}.png`);
 
-    Ffmpeg(videoPath)
-      .seekInput("00:00:01")
-      .outputOptions(["-vframes 1", "-q:v 2", "-s 300x200"])
-      .output(outputFile)
-      .on("end", () => {
-        console.log(`[SUCCESS] Generated thumbnail: ${cleanBaseName}.png`);
-      })
-      .on("error", (err) => {
-        console.error(`[FFMPEG ERROR] on "${cleanBaseName}":`, err.message);
-      })
-      .run();
+    if (existsSync(outputFile)) {
+      console.log(`[EXSISTS] ${outputFile}`);
+    } else {
+      Ffmpeg(videoPath)
+        .seekInput("00:00:01")
+        .outputOptions(["-vframes 1", "-q:v 2", "-s 300x200"])
+        .output(outputFile)
+        .on("end", () => {
+          console.log(`[SUCCESS] Generated thumbnail: ${cleanBaseName}.png`);
+        })
+        .on("error", (err) => {
+          console.error(`[FFMPEG ERROR] on "${cleanBaseName}":`, err.message);
+        })
+        .run();
+    }
   }
 
   async createThumbnails(folder) {
