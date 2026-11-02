@@ -1,4 +1,4 @@
-const mostRecentMediaRes = await fetch("http://192.168.1.45:3700/recent");
+const mostRecentMediaRes = await fetch("/recent");
 const recentData = await mostRecentMediaRes.json();
 const removeExtension = /\.([^.]+)$/;
 const scrubbedTitles = recentData.map((title) =>
@@ -28,7 +28,7 @@ async function handleForm(e) {
   const { content, search } = formData;
   const slug = search.length ? `${content}?search=${search}` : content;
 
-  const res = await fetch(`http://192.168.1.45:3700/api/media/${slug}`);
+  const res = await fetch(`/api/media/${slug}`);
   const data = await res.json();
   const cards = createCards(data);
   searchResults.append(...cards);
@@ -42,7 +42,7 @@ function createCard(data) {
   const titleEle = document.createElement("h3");
   titleEle.textContent = title.replace(removeExtension, "");
   const thumbnail = document.createElement("img");
-  thumbnail.src = `http://192.168.1.45:3700/media/image/${data.title.replace(removeExtension, ".png")}`;
+  thumbnail.src = `/media/image/${data.title.replace(removeExtension, ".png")}`;
   container.append(titleEle, thumbnail);
   return container;
 }

@@ -10,11 +10,11 @@
 
 /* General */
 body {
-  background-image: url(https://www.shutterstock.com/shutterstock/videos/4148673735/thumb/1.jpg?ip=x480);
+  background-image: url(../image/body\ background.webp);
 }
 
 main {
-  background-image: url(https://i.pinimg.com/736x/8f/9b/a8/8f9ba828972a8fb0d5220dfa881b0d05.jpg);
+  background-image: url(../image/main\ background.jpg);
   border-radius: 50px;
 }
 

@@ -19,9 +19,9 @@ app.set("views", path.join(publicPath, "views"));
 
 app.get("/", async (req, res) => {
   const locations = {
-    videoSrc: `${address}/api/media/recentvideo`,
-    podcastSrc: `${address}/api/media/recentpodcast`,
-    lectureSrc: `${address}/api/media/recentlecture`,
+    videoSrc: `${process.env.IP}/api/media/recentvideo`,
+    podcastSrc: `${process.env.IP}/api/media/recentpodcast`,
+    lectureSrc: `${process.env.IP}/api/media/recentlecture`,
   };
   try {
     // res.sendFile(path.join(publicPath, "index.html"));
