@@ -11,11 +11,20 @@
 /* General */
 body {
   background-image: url(../image/body\ background.webp);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.7;
+  font-size: clamp(1.5rem, 1vw, 3rem);
+
+
 }
 
 main {
   background-image: url(../image/main\ background.jpg);
   border-radius: 50px;
+  color: #000000;
+  /* Adjust the color (white/gold/cyan) and blur radius to fit your theme */
+  text-shadow: 0 0 8px rgba(248, 205, 170, 0.8),
+    0 0 10px rgba(248, 205, 170, 0.5);
 }
 
 body,
@@ -108,8 +117,9 @@ nav a {
   flex-direction: column;
   justify-content: space-between;
 }
+
 /* media Search */
-.media-grid{
+.media-grid {
   display: grid;
   /* Automatically wraps items with a minimum size of 250px, expanding to fill leftover space */
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
