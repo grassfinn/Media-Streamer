@@ -64,8 +64,9 @@ export class FileStats {
       const filepaths = search.map(async (item) => {
         const { dirPath, file } = item;
         const filepath = path.join(dirPath, file);
+        const relativePath = filepath.split('public')[1]        
         const createdAt = await this.whenCreated(filepath);
-        const obj = { filepath, createdAt, title: file };
+        const obj = { filepath, relativePath, createdAt, title: file };
 
         return obj;
       });

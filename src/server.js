@@ -70,7 +70,7 @@ app.get("/api/media/:content", async (req, res) => {
   const found = await Promise.all(
     contents.findFileInFolder(search.toLowerCase(), content),
   );
-console.log(found);
+  console.log(found);
 
   // display them on page
   if (found) {
@@ -78,8 +78,14 @@ console.log(found);
   }
 });
 
-app.listen(3500,"0.0.0.0", async () => {
-  console.log(`listening on http://192.168.1.45:3500`);
+app.get("/api/watch/:file", async (req, res) => {
+  const file = req.params.file
+  console.log(file);
+  
+});
+
+app.listen(port, "0.0.0.0", async () => {
+  console.log(`listening on ${address}`);
   await contents.init();
   console.log("Content has been loaded!");
 });

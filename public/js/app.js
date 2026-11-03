@@ -17,7 +17,15 @@ const searchResults = document.querySelector("#search-results");
 
 // Listeners
 navForm.addEventListener("submit", handleForm);
+searchResults.addEventListener("click", handleVideos);
 // Functions
+
+function handleVideos(e) {
+  const mediaContainer = e.target.closest(".media");
+  const path = mediaContainer.dataset.path;
+  console.log(path);
+}
+
 async function handleForm(e) {
   e.preventDefault();
   console.log(e);
@@ -35,10 +43,10 @@ async function handleForm(e) {
 }
 
 function createCard(data) {
-  const { filePath, title } = data;
+  const { filepath, title, relativePath } = data;
   const container = document.createElement("div");
   container.classList.add("pointer", "media");
-  container.dataset.path = filePath;
+  container.dataset.path = relativePath;
   const titleEle = document.createElement("h3");
   titleEle.textContent = title.replace(removeExtension, "");
   const thumbnail = document.createElement("img");
