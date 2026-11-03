@@ -4,7 +4,7 @@ import path from "path";
 import Ffmpeg from "fluent-ffmpeg";
 
 // Set path conditionally based on the environment/platform
-if (process.platform === 'win32') {
+if (process.platform === "win32") {
   // Local Windows development
   Ffmpeg.setFfprobePath("C:/ffmpeg/bin/ffprobe.exe");
   Ffmpeg.setFfmpegPath("C:/ffmpeg/bin/ffmpeg.exe");
@@ -13,7 +13,6 @@ if (process.platform === 'win32') {
   Ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
   Ffmpeg.setFfprobePath("/usr/bin/ffprobe");
 }
-
 
 export class FileStats {
   constructor(folder = "public/media") {
@@ -55,37 +54,40 @@ export class FileStats {
     const file = await fs.stat(filepath);
     return parseInt(file.birthtimeMs);
   }
-  findFileInFolder(name, folder) {
+  async findFileInFolder(name, folder) {
     const search = this.media[folder].filter((item) =>
       item.file.toLowerCase().includes(name.toLowerCase()),
     );
 
     if (search.length) {
-      const filepaths = search.map(async (item) => {
-        const { dirPath, file } = item;
-        const filepath = path.join(dirPath, file);
-        const relativePath = filepath.split('public')[1]        
-        const createdAt = await this.whenCreated(filepath);
-        const obj = { filepath, relativePath, createdAt, title: file };
+      const filepaths = await Promise.all(
+        search.map(async (item) => {
+          const { dirPath, file } = item;
+          const filepath = path.join(dirPath, file);
+          const relativePath = filepath.split("public")[1];
+          const createdAt = await this.whenCreated(filepath);
+          const obj = { filepath, relativePath, createdAt, title: file };
 
-        return obj;
-      });
+          return obj;
+        }),
+      );
 
       return filepaths;
     }
     return false;
   }
-  findFile(name) {
+  async findFile(name) {
     const found = [];
     for (const folder of this.children) {
-      if (this.findFileInFolder(name, folder)) {
-        found.push(this.findFileInFolder(name, folder));
+      const result = await this.findFileInFolder(name, folder)
+      if (result) {
+        found.push(...result);
       }
     }
     if (!found.length) {
       return "File not found";
     }
-    return found;
+    return found[0];
   }
   mostRecent() {
     const { podcasts, videos, lectures } = this.media;

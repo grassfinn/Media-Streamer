@@ -67,9 +67,8 @@ app.get("/api/media/:content", async (req, res) => {
   // find videos with search
   console.log({ search, content }, "searching for...");
 
-  const found = await Promise.all(
-    contents.findFileInFolder(search.toLowerCase(), content),
-  );
+  const found = await contents.findFileInFolder(search.toLowerCase(), content);
+
   console.log(found);
 
   // display them on page
@@ -79,9 +78,13 @@ app.get("/api/media/:content", async (req, res) => {
 });
 
 app.get("/api/watch/:file", async (req, res) => {
-  const file = req.params.file
+  const file = req.params.file;
   console.log(file);
-  
+  const found = await contents.findFile(file);
+  const filepath = path.join(found.filepath);
+
+  const streamer = new MediaStreamer(filepath, "video/mp4");
+  await streamer.stream(req, res);
 });
 
 app.listen(port, "0.0.0.0", async () => {

@@ -14,16 +14,24 @@ lectureTitle.textContent = lecture;
 // Selectors
 const navForm = document.querySelector("#nav-form");
 const searchResults = document.querySelector("#search-results");
+const videoDialog = document.querySelector("#video-search");
+const videoSrc = document.querySelector("#video-src");
+const videoSearch = document.querySelector("#video-search-results");
 
 // Listeners
 navForm.addEventListener("submit", handleForm);
 searchResults.addEventListener("click", handleVideos);
 // Functions
 
-function handleVideos(e) {
+async function handleVideos(e) {
+  videoDialog.showModal();
   const mediaContainer = e.target.closest(".media");
   const path = mediaContainer.dataset.path;
-  console.log(path);
+  const title = mediaContainer.dataset.title;
+  videoSrc.src = `/api/watch/${title}`;
+
+  videoSearch.load();
+  // cancel src on leave?
 }
 
 async function handleForm(e) {
@@ -46,7 +54,8 @@ function createCard(data) {
   const { filepath, title, relativePath } = data;
   const container = document.createElement("div");
   container.classList.add("pointer", "media");
-  container.dataset.path = relativePath;
+  container.dataset.path = filepath;
+  container.dataset.title = title;
   const titleEle = document.createElement("h3");
   titleEle.textContent = title.replace(removeExtension, "");
   const thumbnail = document.createElement("img");
