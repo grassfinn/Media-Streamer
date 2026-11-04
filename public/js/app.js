@@ -53,14 +53,15 @@ async function handleForm(e) {
 function createCard(data) {
   const { filepath, title, relativePath } = data;
   const container = document.createElement("div");
+  container.style.backgroundImage = `url('/media/image/${data.title.replace(removeExtension, ".png")}')`;
   container.classList.add("pointer", "media");
   container.dataset.path = filepath;
   container.dataset.title = title;
   const titleEle = document.createElement("h3");
   titleEle.textContent = title.replace(removeExtension, "");
-  const thumbnail = document.createElement("img");
-  thumbnail.src = `/media/image/${data.title.replace(removeExtension, ".png")}`;
-  container.append(titleEle, thumbnail);
+  // const thumbnail = document.createElement("img");
+  // thumbnail.src = `/media/image/${data.title.replace(removeExtension, ".png")}`;
+  container.append(titleEle);
   return container;
 }
 

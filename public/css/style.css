@@ -6,6 +6,7 @@
 
 :root {
   --padding: 2rem;
+  --light-tan: rgb(248, 205, 170);
 }
 
 /* General */
@@ -46,8 +47,13 @@ main {
 
 .media {
   max-width: 75ch;
-  border: 2px solid black;
-  max-width: 300px;
+  text-wrap: balance;
+  text-align: center;
+  background-color: rgba(248, 205, 170, 0.1);
+  border-radius: 25px;
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Nav */
