@@ -52,7 +52,7 @@ export class FileStats {
   }
   async whenCreated(filepath) {
     const file = await fs.stat(filepath);
-    return parseInt(file.birthtimeMs);
+    return parseInt(file.mtimeMs);
   }
   async findFileInFolder(name, folder) {
     const search = this.media[folder].filter((item) =>
