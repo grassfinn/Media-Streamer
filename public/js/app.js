@@ -24,9 +24,12 @@ searchResults.addEventListener("click", handleVideos);
 // Functions
 
 async function handleVideos(e) {
+  if (!e.target.classList.contains("media")) {
+    return;
+  }
   videoDialog.showModal();
   const mediaContainer = e.target.closest(".media");
-  const path = mediaContainer.dataset.path;
+  // const path = mediaContainer.dataset.path;
   const title = mediaContainer.dataset.title;
   videoSrc.src = `/api/watch/${title}`;
 
